@@ -73,6 +73,7 @@ header{background:#fff;border-bottom:3px solid var(--red);padding:14px 20px}
 .b-kids{background:#e8f5e9;color:#1b5e20}
 .b-junior{background:#e3f2fd;color:#0d47a1}
 .b-times{background:#f3e5f5;color:#4a148c}
+.b-junior_m{background:#e0f2f1;color:#00695c}
 .lvbadge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:2px;background:#eceff1;color:#546e7a}
 
 /* 기사 모달 */
@@ -146,16 +147,17 @@ footer{background:var(--navy);color:#8899bb;font-size:11px;text-align:center;pad
 
 <script>
 // ────────────────────────────────────────────────
-// 설정: 파이프라인 서버 주소 (Railway v3)
-const API_BASE = "https://web-production-d0e54.up.railway.app";
+// 설정: 파이프라인 서버 주소 (Railway v4)
+const API_BASE = "https://web-production-8adb9.up.railway.app";
 // ────────────────────────────────────────────────
 
 const LEVELS = [
-  { key: "all",    label: "전체" },
-  { key: "kinder", label: "Kinder" },
-  { key: "kids",   label: "Kids" },
-  { key: "junior", label: "Junior" },
-  { key: "times",  label: "Times" },
+  { key: "all",      label: "전체" },
+  { key: "kinder",   label: "Kinder" },
+  { key: "kids",     label: "Kids" },
+  { key: "junior",   label: "Junior" },
+  { key: "times",    label: "Times" },
+  { key: "junior_m", label: "Junior M" },
 ];
 
 let _articles = [];
@@ -170,7 +172,7 @@ function esc(s) {
 }
 
 function badge(level) {
-  return `<span class="mbadge b-${esc(level)}">${esc(level.toUpperCase())}</span>`;
+  return `<span class="mbadge b-${esc(level)}">${esc(level.toUpperCase().replace("_", " "))}</span>`;
 }
 
 function imgOrPh(url, cls, phCls, icon) {
@@ -222,7 +224,7 @@ function renderList() {
 
   let html = `
     <div class="section-bar">
-      <div class="section-title">${_activeTab === "all" ? "최신 발행 기사" : "NE Times " + _activeTab.charAt(0).toUpperCase() + _activeTab.slice(1)}</div>
+      <div class="section-title">${_activeTab === "all" ? "최신 발행 기사" : "NE Times " + (LEVELS.find(t => t.key === _activeTab) || { label: _activeTab }).label}</div>
       <div class="section-count">${list.length}건</div>
       <div class="section-line"></div>
     </div>
